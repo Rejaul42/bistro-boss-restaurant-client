@@ -18,7 +18,8 @@ const Category = () => {
                     heading ={"ORDER ONLINE"}>
                 </SectionTitle>
                 <Swiper
-                    spaceBetween={50}
+                    slidesPerView={3}
+                    spaceBetween={30}
                     freeMode={true}
                     pagination={{
                         clickable: true,
