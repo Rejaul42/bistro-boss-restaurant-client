@@ -5,45 +5,47 @@ import { useForm } from "react-hook-form";
 import { useContext } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 import Swal from 'sweetalert2'
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
 
 const SignUp = () => {
+    const axiosPublic = useAxiosPublic();
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
     const { createUser, updateUserProfile } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const onSubmit = (data) => {
-        console.log(data)
         createUser(data.email, data.password)
-            .then(result => {
-                console.log(result.user)
-                updateUserProfile(data.name, data.photoURL)
-                .then(() =>{
-                    console.log('user profile is updated')
-                    reset()
-                    Swal.fire({
-                        title: "User Create successfully",
-                        showClass: {
-                            popup: `
-                        animate__animated
-                        animate__fadeInUp
-                        animate__faster
-                      `
-                        },
-                        hideClass: {
-                            popup: `
-                        animate__animated
-                        animate__fadeOutDown
-                        animate__faster
-                      `
-                        }
-                    });
+        .then(result => {
+            const loggedUser = result.user;
+            console.log(loggedUser);
+            updateUserProfile(data.name, data.photoURL)
+                .then(() => {
+                    // create user entry in the database
+                    const userInfo = {
+                        name: data.name,
+                        email: data.email
+                    }
+                    console.log(userInfo)
+                    axiosPublic.post('/users', userInfo)
+                        .then(res => {
+                            if (res.data.insertedId) {
+                                console.log('user added to the database')
+                                reset();
+                                Swal.fire({
+                                    position: 'top-end',
+                                    icon: 'success',
+                                    title: 'User created successfully.',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                                navigate('/');
+                            }
+                        })
+
+
                 })
-                
-                navigate('/')
-            })
-            .catch(error => {
-                console.log(error.message)
-            })
+                .catch(error => console.log(error))
+        })
     }
     return (
         <div>

@@ -1,9 +1,12 @@
 import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "../../../Provider/AuthProvider";
+import { FaCartPlus } from 'react-icons/fa6';
+import useCart from "../../../Hooks/useCart";
 
 const Navbar = () => {
     const { user, logOut } = useContext(AuthContext)
+    const [cart] = useCart()
 
     const handleLogOut = () => {
         logOut()
@@ -16,6 +19,13 @@ const Navbar = () => {
         <li><NavLink to="/menu">Menu</NavLink></li>
         <li><NavLink to="/order/salad">Order</NavLink></li>
         <li><NavLink to="/secrate">Secrate</NavLink></li>
+        <li><NavLink to="/dashboard/cart">
+            <button className="flex gap-2 justify-center items-center">
+            <FaCartPlus />
+                <div className="badge badge-secondary">+{cart.length}</div>
+            </button>
+
+        </NavLink></li>
 
         {
             user ? <>
@@ -43,8 +53,8 @@ const Navbar = () => {
                     </div>
                 </div>
 
-                <div className="navbar-end">
-                    <div className="hidden lg:flex">
+                <div className="navbar-end items-center">
+                    <div className="hidden lg:flex justify-center items-center">
                         <ul className="menu menu-horizontal px-1">
                             {navLink}
                         </ul>
