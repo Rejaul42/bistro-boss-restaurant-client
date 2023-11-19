@@ -5,6 +5,7 @@ import { Helmet } from "react-helmet";
 import { AuthContext } from "../../Provider/AuthProvider";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2'
+import SocialLogin from "../../SocialLogin/SocialLogin";
 
 const Login = () => {
     const { signIn } = useContext(AuthContext)
@@ -61,7 +62,7 @@ const Login = () => {
     }
 
     return (
-        <div className="bg-base-300 h-screen">
+        <div className="bg-base-300 h-full">
             <Helmet>
                 <title>Bistro Boos | Login</title>
             </Helmet>
@@ -69,8 +70,8 @@ const Login = () => {
                 <div className="flex-1">
                     <img src={authImg2} alt="" />
                 </div>
-                <div className="flex-1">
-                    <form onSubmit={handleLogin} className="card-body">
+                <div className="flex-1 bg-base-200">
+                    <form onSubmit={handleLogin} className="card-body ">
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">Email</span>
@@ -98,6 +99,7 @@ const Login = () => {
                     <div className="text-center">
                         <p>New here? <Link to="/signup" className="underline font-medium">Create a New Account</Link></p>
                     </div>
+                    <SocialLogin></SocialLogin>
                 </div>
             </div>
         </div>

@@ -6,6 +6,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 import Swal from 'sweetalert2'
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import SocialLogin from "../../SocialLogin/SocialLogin";
 
 const SignUp = () => {
     const axiosPublic = useAxiosPublic();
@@ -104,6 +105,7 @@ const SignUp = () => {
                         <div className="text-center">
                             <p>Already have an account? <Link to="/login" className="underline font-medium">Go to login</Link></p>
                         </div>
+                        <SocialLogin></SocialLogin>
                     </div>
                 </div>
             </div>
