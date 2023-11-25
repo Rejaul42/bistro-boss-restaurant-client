@@ -9,7 +9,7 @@ import useAdmin from "../Hooks/useAdmin";
 
 const Dashboard = () => {
     const [cart] = useCart();
-    const isAdmin = useAdmin();
+    const [isAdmin] = useAdmin();
 
     return (
         <div className="flex">
@@ -67,9 +67,9 @@ const Dashboard = () => {
                                         Add a Review</NavLink>
                                 </li>
                                 <li>
-                                    <NavLink to="/dashboard/bookings">
+                                    <NavLink to="/dashboard/paymentHistory">
                                         <FaList></FaList>
-                                        My Bookings</NavLink>
+                                        Payment History</NavLink>
                                 </li>
                             </>
                     }

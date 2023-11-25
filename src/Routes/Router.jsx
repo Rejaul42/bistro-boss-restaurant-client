@@ -12,6 +12,15 @@ import Secrate from "../Pages/Secrate/Secrate";
 import Dashboard from "../Layout/Dashboard";
 import Cart from "../Pages/Dashboard/Cart/Cart";
 import AllUsers from "../Pages/Dashboard/AllUsers/AllUsers";
+// import AdminRoute from "./AdminRoute";
+import AddItems from "../Pages/Dashboard/AddItems/AddItems";
+import AdminRoute from "./AdminRoute";
+import ManageItem from "../Pages/Dashboard/ManageItem/ManageItem";
+import UpdateItem from "../Pages/Dashboard/UpdateItem/UpdateItem";
+import Payment from "../Pages/Dashboard/Payment/Payment";
+import PaymentHistory from "../Pages/Dashboard/PaymentHistory/PaymentHistory";
+import AdminHome from "../Pages/Dashboard/AdminHome/AdminHome";
+import UserHome from "../Pages/Dashboard/UserHome/UserHome";
 
 
   export const router = createBrowserRouter([
@@ -50,13 +59,42 @@ import AllUsers from "../Pages/Dashboard/AllUsers/AllUsers";
       element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
       children:[
         {
+          path: "userHome",
+          element: <UserHome></UserHome>
+        },
+        {
           path: "cart",
           element: <Cart></Cart>
         },
-
+        {
+          path: "payment",
+          element: <Payment></Payment>
+        },
+        {
+          path: 'paymentHistory',
+          element: <PaymentHistory></PaymentHistory>
+        },
+        // Admin only
+        {
+          path: "adminHome",
+          element: <AdminRoute><AdminHome></AdminHome></AdminRoute>
+        },
+        {
+          path: "addItems",
+          element: <AdminRoute><AddItems></AddItems></AdminRoute>
+        },
+        {
+          path: "manageItems",
+          element: <AdminRoute><ManageItem></ManageItem></AdminRoute>
+        },
+        {
+          path: "updateItem/:id",
+          element: <AdminRoute><UpdateItem></UpdateItem></AdminRoute>,
+          loader: ({params}) => fetch(`http://localhost:5000/menu/${params.id}`)
+        },
         {
           path: "users",
-          element : <AllUsers></AllUsers>
+          element : <AdminRoute><AllUsers></AllUsers></AdminRoute>
         }
       ]
     }
